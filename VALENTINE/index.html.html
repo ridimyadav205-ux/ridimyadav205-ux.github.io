@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Will You Be My Valentine?</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+    * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+      z-index: 2;
+    }
+    h1 { font-size: 2.5rem; margin-bottom: 20px; }
+    p { font-size: 1.2rem; margin-bottom: 30px; }
+    .buttons {
+      position: relative;
+      height: 80px;
+    }
+    button {
+      padding: 12px 28px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    #yesBtn {
+      background: #ff6f91;
+      color: white;
+      margin-right: 20px;
+    }
+    #noBtn {
+      background: #fff;
+      color: #ff6f91;
+      position: absolute;
+    }
+    #yesBtn:hover { transform: scale(1.1); }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ff6f91;
+      transform: rotate(45deg);
+      animation: float 6s linear infinite;
+      opacity: 0.6;
+      filter: blur(0.5px);
+    }
+    .heart::before, .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ff6f91;
+      border-radius: 50%;
+    }
+    .heart::before { top: -10px; left: 0; }
+    .heart::after { left: -10px; top: 0; }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(45deg) scale(0.9); opacity: 0; }
+      20% { opacity: 0.6; }
+      100% { transform: translateY(-10vh) rotate(45deg) scale(1.1); opacity: 0; }
+    }
+      20% { opacity: 1; }
+      100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      margin-top: 20px;
+      opacity: 0.8;
+    }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+  <audio id="bgMusic" loop>
+    <!-- Perfect by Ed Sheeran (add the MP3 file as perfect.mp3) -->
+    <source src="perfect.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="card">
+    <h1>Hey NIKSAAAA ❤️</h1>
+    <p>NIKSAAAA, will you be my Valentine?<br><span style="font-weight:300; opacity:0.9;">This song reminds me of you ✨</span></p>
+    <div class="buttons">
+      <button id="yesBtn">Yes 💖</button>
+      <button id="noBtn">No 🙈</button>
+    </div>
+    <div class="hint">(Tap anywhere to start the music 🎶)</div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const music = document.getElementById('bgMusic');
+
+    document.body.addEventListener('click', () => {
+      if (music.paused) music.play();
+    });
+
+    noBtn.addEventListener('mouseenter', moveButton);
+    noBtn.addEventListener('click', moveButton);
+
+    function moveButton() {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 50);
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+    }
+
+    yesBtn.addEventListener('click', () => {
+      clearInterval(heartInterval);
+      heartInterval = setInterval(createHeart, 1200);
+      document.querySelector('.card').innerHTML = `
+        <h1>For You, NIKSAAAA 💖</h1>
+        <p style="font-size:1.15rem; line-height:1.7; text-shadow: 0 0 20px rgba(255,255,255,0.35); animation: fadeIn 2.5s ease forwards;">
+          I love you so much, my cutest, prettiest girlfriend 💕<br>
+          <span style="font-weight:300; opacity:0.9;">Perfect isn’t the song.<br>Perfect is loving you ✨</span>
+        </p>
+      `;
+    });
+    });
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 7000);
+    }
+
+    let heartInterval = setInterval(createHeart, 450);
+  </script>
+</body>
+</html>
